@@ -32,4 +32,9 @@ class Book extends Model
     {
         return $this->belongsToMany(Genre::class, 'book_genre');
     }
+
+    public function status()
+    {
+        return ($this->status === 'borrowed') ? 'Emprestado' : 'Disponível';
+    }
 }
