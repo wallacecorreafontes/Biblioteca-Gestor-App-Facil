@@ -37,7 +37,7 @@
             </div>
 
             <div class="mb-4">
-                <label for="registration_number" class="block text-sm font-medium text-gray-700">Número de Matrícula</label>
+                <label for="registration_number" class="block text-sm font-medium text-gray-700">Número de Cadastro</label>
                 <input type="number" name="registration_number" id="registration_number"
                     value="{{ old('registration_number', $user->registration_number) }}"
                     class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
