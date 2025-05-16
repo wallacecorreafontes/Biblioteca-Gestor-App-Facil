@@ -37,4 +37,14 @@ class Book extends Model
     {
         return ($this->status === 'borrowed') ? 'Emprestado' : 'Disponível';
     }
+
+    public function scopeAvailable($query)
+    {
+        return $query->where('status', 'available');
+    }
+
+    public function loans()
+    {
+        return $this->hasMany(Loan::class);
+    }
 }
