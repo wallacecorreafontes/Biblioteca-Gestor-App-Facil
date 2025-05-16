@@ -11,7 +11,22 @@ class User extends Model
 {
     use SoftDeletes, HasFactory;
 
-
+    protected $table = 'users';
+    
+    protected $fillable = [
+        'name',
+        'email',
+        'registration_number',
+    ];
+    
+    protected $casts = [
+        'registration_number' => 'integer',
+    ];
+    
+    protected $dates = [
+        'deleted_at',
+    ];
+    
     public static function boot()
     {
         parent::boot();
@@ -20,22 +35,6 @@ class User extends Model
             if ($user->loans()->exists()) return throw new Exception('Usuário possui livros não devolvido e não pode ser deletado.');
         });
     }
-
-    protected $table = 'users';
-
-    protected $fillable = [
-        'name',
-        'email',
-        'registration_number',
-    ];
-
-    protected $casts = [
-        'registration_number' => 'integer',
-    ];
-
-    protected $dates = [
-        'deleted_at',
-    ];
 
     public function loans()
     {
