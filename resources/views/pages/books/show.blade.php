@@ -44,14 +44,14 @@
                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                 @enderror
             </div>
-
+            
             <div class="mb-4">
                 <label for="genre" class="block text-sm font-medium text-gray-700">Situação</label>
                 <select name="status" id="status"
                     class="mt-1 block w-full rounded border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                    <option value="available" {{ old('status', $book->status) === 'available' ? 'selected' : '' }}>
+                    <option value="available" {{ $book->status === 'available' ? 'selected' : '' }}>
                         Disponível</option>
-                    <option value="borrowed" {{ old('status', $book->status) === 'borrowed' ? 'selected' : '' }}>Emprestado
+                    <option value="borrowed" {{ $book->status === 'borrowed' ? 'selected' : '' }}>Emprestado
                     </option>
                 </select>
                 @error('status')
