@@ -1,66 +1,68 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Biblioteca Gestor App Fácil
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Sobre o Projeto
 
-## About Laravel
+Este projeto é um sistema básico para gerenciar usuários, livros e empréstimos em uma biblioteca, desenvolvido em Laravel 10 com PHP e MySQL.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Funcionalidades Principais
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- CRUD completo de usuários da biblioteca (Nome, Email, Número de Cadastro).
+- CRUD completo de livros com categorização por gênero.
+- Controle do status dos livros: Disponível ou Emprestado.
+- Controle de empréstimos com registro da data de empréstimo e data prevista para devolução.
+- Marcar empréstimos como devolvidos.
+- Identificação automática de empréstimos atrasados com base na data prevista de devolução.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### Funcionamento do Status "Devolvido"
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- O status "Devolvido" é definido quando o campo `returned_at` do empréstimo é preenchido, o que ocorre através de uma ação explícita do usuário (botão para marcar como devolvido).
+- Essa ação atualiza o registro do empréstimo e também altera o status do livro para "available".
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### Funcionamento do Status "Atrasado"
 
-## Laravel Sponsors
+- O status "Atrasado" é calculado automaticamente pelo sistema, sem intervenção manual.
+- A lógica utilizada verifica se a data atual (`today()`) ultrapassou a data prevista de devolução (`due_date`) e se o livro ainda não foi devolvido (`returned_at` está nulo).
+- Dessa forma, a marcação de atraso é dinâmica e sempre refletirá o estado real do empréstimo sem depender de atualizações manuais que podem gerar inconsistências.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+#### Justificativa Técnica
 
-### Premium Partners
+- Optar por um status "Atrasado" automático melhora a confiabilidade dos dados, pois elimina a possibilidade de erro humano ao marcar um empréstimo como atrasado.
+- Essa abordagem está alinhada com boas práticas de desenvolvimento e sistemas de controle de empréstimos reais.
+- Caso necessário, o sistema pode ser facilmente estendido para permitir marcação manual via endpoint ou interface.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+---
+## Como Rodar o Projeto
 
-## Contributing
+### Requisitos
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- PHP >= 8.x
+- Composer
+- MySQL
+- Laravel 10
 
-## Code of Conduct
+### Passos para execução local
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/wallacecorreafontes/Biblioteca-Gestor-App-Facil.git
 
-## Security Vulnerabilities
+2. Instale as dependências:
+   ```bash
+   composer install
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3. Configure seu .env com as credenciais do banco de dados.
+   ```bash
+   cp .env.example .env
+4. Rode as migrations
+   ```bash
+   php artisan migrate
+5. Inicie o servidor:
+   ```bash
+   php artisan serve
+6. Acesse `http://localhost:8000`
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
