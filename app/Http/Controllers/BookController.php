@@ -54,6 +54,12 @@ class BookController extends Controller
         try {
             DB::beginTransaction();
 
+            $newStatus = $request->input('status');
+
+            if ($newStatus !== $book->status && $book->loans()->exists()) {
+                return back()->withErrors(['status' => 'Não é possível alterar o status do livro com empréstimos ativos.']);
+            }
+
             $book->update($request->validated());
             $book->genres()->sync($request->genre);
 
